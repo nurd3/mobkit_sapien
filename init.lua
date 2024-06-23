@@ -14,6 +14,7 @@ function table.clone(t)
 	return {table.unpack(t)}
 end
 
+dofile(path.."/mobkit_plus.lua")
 dofile(path.."/high.lua")
 dofile(path.."/brain.lua")
 dofile(path.."/mobkit.lua")
