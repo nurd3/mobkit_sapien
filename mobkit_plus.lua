@@ -1,3 +1,5 @@
+mobkit_plus = {}
+
 function mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
 
 	-- only do things if alive
