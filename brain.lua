@@ -47,12 +47,12 @@ function mobkit_sapien.brain(self, prty)
 		end
 		
 		if prty < 10 then
-			if tod > 4 or tod < 1 then
+			if tod > 4 or tod < 1 and mobkit_sapien.bednode then
 				self.act = "sleep"
 				mobkit_sapien.hq_sleep(self, 10)
 			elseif tod <= 3 then
 				mobkit_sapien.hq_work(self, 10)
-			elseif not mobkit.recall(self, "bed") then 
+			elseif not mobkit.recall(self, "bed") and mobkit_sapien.bednode then 
 				self.act = "find bed"
 				mobkit_sapien.hq_find_bed(self, 10)
 			end

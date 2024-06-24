@@ -7,6 +7,13 @@ mobkit_sapien = {}
 
 mobkit_sapien.get_translator = minetest.get_translator"mobkit_sapien"
 
+if beds then
+	mobkit_sapien.bednode = "beds:bed"
+end
+if bed_rest then
+	mobkit_sapien.bednode = "tech:sleeping_spot"
+end 
+
 if not table.unpack then
     table.unpack = unpack
 end

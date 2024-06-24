@@ -38,5 +38,5 @@ minetest.register_decoration({
 	},
 	y_max = 30,
 	y_min = -50,
-	decoration = {"mobkit_sapien:egg", "beds:bed", "default:chest"},
+	decoration = {"mobkit_sapien:egg", mobkit_sapien.bednode, "default:chest"},
 })

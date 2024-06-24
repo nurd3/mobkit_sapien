@@ -200,7 +200,7 @@ function mobkit_sapien.hq_sleep(self, prty)
 	if bed then
 		bed = vector.from_string(bed)
 	else
-		bed = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
+		bed = mobkit_plus.random_destination(self, 32)
 	end
 
 	local func = function(self)
