@@ -32,3 +32,13 @@ function mobkit_plus.node_dps_dmg(self)
 		mobkit.hurt(self, total_damage)
 	end
 end
+
+function mobkit_plus.random_destination(self, max_offset) 
+	local ret = vector.copy(mobkit.get_stand_pos(self))
+	vector.offset(ret,
+		math.random(-max_offset,max_offset),
+		math.random(-max_offset,max_offset),
+		math.random(-max_offset,max_offset)
+	)
+	return ret
+end

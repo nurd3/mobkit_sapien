@@ -47,47 +47,48 @@ minetest.register_entity("mobkit_sapien:sapien", {
 	on_rightclick = function (self, clicker)
 		if not mobkit.recall(self, "name") then mobkit.remember(self, "name", mobkit_sapien.gen_name()) end
 		local job = mobkit.recall(self, "job")
+		local jobdef
 		if job then
 			jobdef = mobkit_sapien.registered_jobs[job]
 		end
-		if clicker:get_wielded_item():get_name() then
-			local toolname = clicker:get_wielded_item():get_name()
-			local newjob = mobkit_sapien.jobs.get_job(toolname)
-			if newjob then
-				local newjobdef = mobkit_sapien.registered_jobs[newjob]
-				mobkit.forget(self, "job")
-				mobkit.remember(self, "job", newjob)
-				minetest.chat_send_all(mobkit.recall(self, "name").." now work "..newjobdef.name)
-				return 
+		local stack = clicker:get_wielded_item()
+		if stack:get_name() then
+			local itemname = clicker:get_wielded_item():get_name()
+			local itemdef = minetest.registered_craftitems[itemname]
+			if itemdef then 
+				if itemdef.mobkit_sapien_assign_job then
+					local oldjob, newjob = job, itemdef.mobkit_sapien_assign_job
+					if newjob == oldjob then
+						local pos = clicker:get_pos()
+						pos.y = pos.y + 1
+						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
+					end
+					stack:set_count(stack:get_count() - 1)
+					clicker:set_wielded_item(stack)
+					mobkit_sapien.set_job(self, newjob)
+					return
+				end
+				if itemname == "currency:minegeld_10" then
+					local item = mobkit_sapien.jobs.gen_item(job, 2)
+					if item then
+						local inv = clicker:get_inventory()
+						if inv:room_for_item("main", item) then
+							inv:add_item("main", item)
+						else
+							local pos = clicker:get_pos()
+							pos.y = pos.y + 1
+							minetest.add_item(pos, ItemStack(item))
+						end
+					else
+						local pos = clicker:get_pos()
+						pos.y = pos.y + 1
+						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
+					end
+					stack:set_count(stack:get_count() - 1)
+					clicker:set_wielded_item(stack)
+					return
+				end
 			end
-		end
-		local msg
-		
-		if self.act then
-			msg = mobkit.recall(self, "name").." "..self.act
-		else
-			local bed = mobkit.recall(self, "bed")
-			local bedstr = nil
-			if bed then
-				bed = vector.from_string(bed)
-				
-				bedstr = "("..bed.x..","..bed.y..","..bed.z..")"
-			end
-			if jobdef then
-				job = jobdef.name
-			end
-			local tribe = mobkit.recall(self, "tribe")
-			if tribe then tribe = mobkit_sapien.tribes.getname(tribe) else tribe = "N/A" end
-			msg = 
-				"===\nname: "..mobkit.recall(self, "name")..
-				"\ntribe: "..tribe..
-				"\njob: "..(job or "N/A")..
-				"\nbed: "..(bedstr or "N/A")
-		end
-		if clicker:is_player() then
-			minetest.chat_send_player(clicker:get_player_name(), msg)
-		else
-			minetest.chat_send_all(msg)
 		end
 	end
 

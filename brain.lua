@@ -6,6 +6,13 @@ function mobkit_sapien.brain(self, prty)
 	if self.hp <= 0 or self.dead then	-- if is dead
 		mobkit.clear_queue_high(self)	-- cease all activity
 		mobkit_sapien.tribes.leave(mobkit.recall(self, "tribe"))
+		local job = mobkit.recall(self, "job")
+		if job and mobkit_sapien.registered_jobs[job] then
+			local pos = mobkit.get_stand_pos(self)
+			pos.y = pos.y + 2
+			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(job.."_license 1")) end
+			mobkit_sapien.unemploy(self)
+		end
 		mobkit.hq_die(self)				-- kick the bucket
 		return
 	end

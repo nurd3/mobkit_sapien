@@ -11,6 +11,7 @@ local storage = minetest.get_mod_storage()
 function mobkit_sapien.tribes.clear()
 	storage:set_string("tribes", "")
 	tribes = {}
+	enemies = {}
 end
 
 function mobkit_sapien.tribes.add_enemy(id, ref)
@@ -77,8 +78,44 @@ function mobkit_sapien.tribes.leave(id)
 	end
 	t.level = level
 	tribes[id] = minetest.serialize(t)
-	if t.pop <= 0 then tribes[id] = nil end
+	if t.pop <= 0 then mobkit_sapien.tribes.delete(id) end
 	storage:set_string("tribes", minetest.serialize(tribes))
+end
+
+function mobkit_sapien.tribes.employ(id, name)
+	if not id or not tribes[id] or not mobkit_sapien.registered_jobs[name] then return end
+	local t = minetest.deserialize(tribes[id])
+	if t.jobs then
+		if t.jobs[name] then
+			t.jobs[name] = t.jobs[name] + 1
+		else
+			t.jobs[name] = 1
+		end
+	else
+		t.jobs = {}
+		t.jobs[name] = 1
+	end
+	tribes[id] = minetest.serialize(t)
+	storage:set_string("tribes", minetest.serialize(tribes))
+	return true
+end
+function mobkit_sapien.tribes.unemploy(id, name)
+	if not id or not tribes[id] or not mobkit_sapien.registered_jobs[name] then return end
+	local t = minetest.deserialize(tribes[id])
+	if t.jobs then
+		if t.jobs[name] then
+			t.jobs[name] = t.jobs[name] - 1
+		else
+			t.jobs[name] = 0
+		end
+	else
+		t.jobs = {}
+		t.jobs[name] = 0
+	end
+	t.level = level
+	tribes[id] = minetest.serialize(t)
+	storage:set_string("tribes", minetest.serialize(tribes))
+	return true
 end
 
 function mobkit_sapien.tribes.set(id, data)
@@ -97,6 +134,7 @@ end
 function mobkit_sapien.tribes.delete(id)
 	tribes[id] = nil
 	storage:set_string("tribes", minetest.serialize(tribes))
+	enemies[id] = nil
 end
 
 function mobkit_sapien.tribes.get(id)
@@ -120,8 +158,9 @@ function mobkit_sapien.tribes.at(pos)
 	for id,data in ipairs(tribes) do
 		if data then
 			local a = minetest.deserialize(data)
-			local pos2, max = a.origin, a.level * 8 + 8
-			if pos2 and math.abs(x - pos2.x) <= max and math.abs(z - pos2.z) <= max then return id end
+			local pos2, max = a.origin, a.level
+			max = max and max * 8 + 8
+			if pos2 and max and math.abs(x - pos2.x) <= max and math.abs(z - pos2.z) <= max then return id end
 		end
 	end
 end
