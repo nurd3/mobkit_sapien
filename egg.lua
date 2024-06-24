@@ -23,3 +23,20 @@ minetest.register_node("mobkit_sapien:egg", {
 	end,
 	
 })
+minetest.register_decoration({
+	name = "mobkit_sapien:egg",
+	deco_type = "simple",
+	place_on = {"mapgen_dirt_with_grass", "mapgen_cobble", "mapgen_dirt_with_snow"},
+	sidelen = 16,
+	noise_params = {
+		offset = -0.012,
+		scale = 0.024,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 230,
+		octaves = 3,
+		persist = 0.6
+	},
+	y_max = 30,
+	y_min = -50,
+	decoration = {"mobkit_sapien:egg", "beds:bed", "default:chest"},
+})
