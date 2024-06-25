@@ -125,12 +125,11 @@ function mobkit_sapien.jobs.random()
 		return names[math.random(#names)]
 	end
 end
-function mobkit_sapien.jobs.gen_item(jobname, inc)
+function mobkit_sapien.jobs.gen_item(jobname)
 	local jobdef = mobkit_sapien.registered_jobs[jobname]
 	if not jobdef or not jobdef.items then return end
-	local n = 1 / #jobdef.items
 	for i,v in ipairs(jobdef.items) do 
-		if #v > 0 and math.random(1) + inc * i * n > 0.5 then
+		if #v > 0 and math.random(1) > 0.5 then
 			local item = v[math.random(#v)]
 			return item
 		end

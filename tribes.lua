@@ -17,7 +17,7 @@ end
 function mobkit_sapien.tribes.add_enemy(id, ref)
 	if not id then return end
 	if not enemies[id] then enemies[id] = {} end
-	if ref.get_hp and ref:get_hp() > 0 then
+	if mobkit.is_alive(ref) then
 		table.insert(enemies[id], ref)
 	end
 end
@@ -40,7 +40,7 @@ function mobkit_sapien.tribes.clear_dead_enemies(id)
 	local list = table.clone(enemies[id])
 	local i = 0
 	for i,v in ipairs(list) do
-		if not v.get_hp or v:get_hp() <= 0 then
+		if mobkit.is_alive(ref) then
 			mobkit_sapien.tribes.del_enemy(id, i)
 		end
 	end

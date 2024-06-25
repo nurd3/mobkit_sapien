@@ -7,7 +7,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 	collide_with_objects = true,
 	collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.2, 0.3},
 	visual = "mesh",
-	mesh = "sapien.b3d",
+	mesh = "character.b3d",
 	textures = {"sapien.png"},
 	visual_size = {x = 1.0, y = 0.75},
 	static_save = true,
@@ -23,23 +23,32 @@ minetest.register_entity("mobkit_sapien:sapien", {
 	view_range = 24,
 	lung_capacity = 10,
 	max_hp = 14,
-	timeout = 600,
 	attack={range=0.5,damage_groups={fleshy=7}},
 	sounds = {
-		attack = "sapien_attack",
-		hunt = "sapien_hunt",
+		gasp = "sapien_gasp",
+		die = "sapien_die",
 		hurt = "sapien_hurt",
 		idle = "sapien_idle"
 	},
 	animation = {
-		walk={range={x=10,y=29},speed=30,loop=true},
-		stand={range={x=1,y=5},speed=1,loop=true},
+		-- Standard animations.
+		stand     = {range = {x = 0, y = 79}, speed = 30, loop = true},
+		lay       = {range = {x = 162, y = 166}, speed = 30, loop = true,
+			collisionbox = {-0.6, 0.0, -0.6, 0.6, 0.3, 0.6}},
+		walk      = {range = {x = 168, y = 187}, speed = 30, loop = true},
+		mine      = {range = {x = 189, y = 198}, speed = 30, loop = true},
+		walk_mine = {range = {x = 200, y = 219}, speed = 30, loop = true},
+		sit       = {range = {x = 81,  y = 160}, speed = 30, loop = true,
+			collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.0, 0.3}}
 	},
+	
+	knockback = true,
 
 	brainfunc = mobkit_sapien.brain,
 	
 	on_punch = function (self, puncher, time_from_last_punch, tool_capabilities, dir)
 		if mobkit.is_alive(self) and mobkit.is_alive(puncher) then
+			mobkit.hq_runfrom(self, 15, obj)
 			mobkit_sapien.tribes.add_enemy(mobkit.recall(self, "tribe"), puncher)
 		end
 		mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
