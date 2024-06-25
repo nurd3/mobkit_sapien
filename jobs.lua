@@ -116,9 +116,9 @@ mobkit_sapien.register_job("mobkit_sapien:trader", {
 
 function mobkit_sapien.jobs.random()
 	local names = {}
-	for name,def in ipairs(mobkit_sapien.registered_jobs) do
+	for name,def in pairs(mobkit_sapien.registered_jobs) do
 		if not def.unrandom then
-			table.insert(names, 0, name)
+			table.insert(names, name)
 		end
 	end
 	if #names > 0 then
