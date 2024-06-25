@@ -39,12 +39,20 @@ function mobkit_sapien.tribes.clear_dead_enemies(id)
 	end
 	local list = table.clone(enemies[id])
 	local i = 0
-	for i,v in ipairs(list) do
-		if mobkit.is_alive(ref) then
+	for i,ref in ipairs(list) do
+		if not mobkit.is_alive(ref) then
 			mobkit_sapien.tribes.del_enemy(id, i)
 		end
 	end
 	return true
+end
+
+function mobkit_sapien.tribes.clear_dead_enemies_all()
+	if enemies then
+		for id,_ in pairs(enemies) do
+			mobkit_sapien.tribes.clear_dead_enemies(id)
+		end
+	end
 end
 
 function mobkit_sapien.tribes.join(id)
@@ -173,6 +181,10 @@ function mobkit_sapien.tribes.at(pos)
 		end
 	end
 end
+
+minetest.register_on_dieplayer(function()
+	mobkit_sapien.tribes.clear_dead_enemies_all()
+end)
 
 minetest.register_chatcommand("clear_tribes", {
     params = "",

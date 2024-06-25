@@ -116,7 +116,7 @@ minetest.register_entity("mobkit_sapien:guardian", {
 	buoyancy = 0.5,						-- portion of hitbox submerged
 	max_speed = 3,
 	jump_height = 2.50,
-	view_range = 24,
+	view_range = 32,
 	lung_capacity = 10,
 	max_hp = 20,
 	attack={range=0.5,damage_groups={fleshy=7}},
