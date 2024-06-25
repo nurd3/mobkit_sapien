@@ -2,14 +2,20 @@ mobkit_plus = {}
 
 function mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
 
-	-- only do things if alive
-	if mobkit.is_alive(self) then
-		mobkit.hurt(self,tool_capabilities.damage_groups.fleshy or 1)
-
-		if mobkit.is_alive(puncher) then			-- is puncher a living and alive thing
-			mobkit.hq_hunt(self, 11, puncher)		-- get revenge
-		end
+	mobkit.hurt(self,tool_capabilities.damage_groups.fleshy or 1)
+	mobkit.make_sound(self, "hurt")
+	if self.knockback then
+		local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
+		self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})
 	end
+	-- stolen from mobs redo
+	core.after(0.1, function()
+		self.object:settexturemod("^[brighten")
+
+		core.after(0.3, function()
+			self.object:settexturemod("")
+		end)
+	end)
 	
 end
 
@@ -29,6 +35,7 @@ function mobkit_plus.node_dps_dmg(self)
 	end
 
 	if total_damage ~= 0 then
+		mobkit.make_sound(self, "hurt")
 		mobkit.hurt(self, total_damage)
 	end
 end

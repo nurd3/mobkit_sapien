@@ -4,6 +4,7 @@ function mobkit_sapien.brain(self, prty)
 	mobkit.vitals(self)
 
 	if self.hp <= 0 or self.dead then	-- if is dead
+		mobkit.make_sound(self, "die")
 		mobkit.clear_queue_high(self)	-- cease all activity
 		mobkit_sapien.tribes.leave(mobkit.recall(self, "tribe"))
 		local job = mobkit.recall(self, "job")
@@ -26,7 +27,6 @@ function mobkit_sapien.brain(self, prty)
 		if not mobkit.recall(self, "name") then 
 			mobkit.remember(self, "name", mobkit_sapien.gen_name()) 
 		end
-		
 		if prty < 20 and self.isinliquid then
 			mobkit.hq_liquid_recovery(self, 20)		-- try not to drown
 		end
@@ -39,8 +39,11 @@ function mobkit_sapien.brain(self, prty)
 				local enemies = mobkit_sapien.tribes.get_enemies(tribe)
 				if enemies and #enemies > 0 then
 					local obj = enemies[math.random(#enemies)]
-					if obj then
-						mobkit.hq_hunt(self, 15, obj)
+					if mobkit.is_alive(obj) then
+						if vector.distance(mobkit.get_stand_pos(self), obj:get_pos()) < self.view_range*1.1 then
+							mobkit.make_sound(self, "gasp")
+							mobkit.hq_runfrom(self, 15, obj)
+						end
 					end
 				end
 			end
@@ -50,11 +53,16 @@ function mobkit_sapien.brain(self, prty)
 			if tod > 4 or tod < 1 and mobkit_sapien.bednode then
 				self.act = "sleep"
 				mobkit_sapien.hq_sleep(self, 10)
-			elseif tod <= 3 then
-				mobkit_sapien.hq_work(self, 10)
-			elseif not mobkit.recall(self, "bed") and mobkit_sapien.bednode then 
-				self.act = "find bed"
-				mobkit_sapien.hq_find_bed(self, 10)
+			else				
+				if math.random(10) == 1 then
+					mobkit.make_sound(self, "idle")
+				end
+				if tod <= 3 then
+					mobkit_sapien.hq_work(self, 10)
+				elseif not mobkit.recall(self, "bed") and mobkit_sapien.bednode then 
+					self.act = "find bed"
+					mobkit_sapien.hq_find_bed(self, 10)
+				end
 			end
 		end
 

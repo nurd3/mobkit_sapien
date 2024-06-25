@@ -178,7 +178,7 @@ function mobkit_sapien.hq_work(self, prty)
 				local jobdef = mobkit_sapien.registered_jobs[job]
 				
 				if math.random(2) > 1 then
-					local item = mobkit_sapien.jobs.gen_item(job, 1)
+					local item = mobkit_sapien.jobs.gen_item(job)
 					if inv:room_for_item("main", item) then
 						inv:add_item("main", item)
 					end
@@ -223,10 +223,10 @@ function mobkit_sapien.hq_sleep(self, prty)
 				end
 			end
 		else
-			if not is_in_group(minetest.get_node(bed).name, "bed") then
+			if not is_in_group(minetest.get_node(bed).name, "bed") and mobkit.recall(self, bed) then
 				mobkit.forget(self, "bed")
-				return true
 			end
+			mobkit.animate(self, "sit")
 		end
 		local tod = minetest.get_timeofday() * 5
 		if tod >= 1 and tod <= 4 then return true end
