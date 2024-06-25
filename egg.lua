@@ -24,11 +24,7 @@ minetest.register_node("mobkit_sapien:egg", {
 	
 })
 
-local mg_nodes = {"mobkit_sapien:egg", "default:chest"}
-
-if mobkit_sapien.bednode then
-	table.insert(mg_nodes, 0, mobkit_sapien.bednode)
-end
+local mg_nodes = {"mobkit_sapien:egg"}
 
 minetest.register_decoration({
 	name = "mobkit_sapien:egg",
