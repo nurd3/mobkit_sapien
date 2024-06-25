@@ -118,6 +118,15 @@ function mobkit_sapien.tribes.unemploy(id, name)
 	return true
 end
 
+function mobkit_sapien.tribes.get_dist(self, id)
+	if not id or not tribes[id] then return end
+	
+	local pos = mobkit.get_stand_pos(self)
+	local tpos = minetest.deserialize(tribes[id]).origin
+	
+	return vector.distance(pos, tpos)
+end
+
 function mobkit_sapien.tribes.set(id, data)
 	tribes[id] = minetest.serialize(data)
 	storage:set_string("tribes", minetest.serialize(tribes))

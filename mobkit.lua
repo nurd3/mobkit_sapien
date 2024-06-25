@@ -18,7 +18,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 										-- api props
 	springiness=0,
 	buoyancy = 0.5,						-- portion of hitbox submerged
-	max_speed = 2,
+	max_speed = 4,
 	jump_height = 1.50,
 	view_range = 24,
 	lung_capacity = 10,
@@ -64,13 +64,22 @@ minetest.register_entity("mobkit_sapien:sapien", {
 		if stack:get_name() then
 			local itemname = clicker:get_wielded_item():get_name()
 			local itemdef = minetest.registered_craftitems[itemname]
-			if itemdef then 
+			if itemdef then
 				if itemdef.mobkit_sapien_assign_job then
+					core.after(0.1, function()
+						mobkit.animate(self, "mine")
+						core.after(0.1, function()
+							mobkit.animate(self, "stand")
+						end)
+					end)
 					local oldjob, newjob = job, itemdef.mobkit_sapien_assign_job
 					if newjob == oldjob then
+						mobkit.make_sound(self, "idle")
 						local pos = clicker:get_pos()
 						pos.y = pos.y + 1
 						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
+					else
+						mobkit.make_sound(self, "gasp")
 					end
 					stack:set_count(stack:get_count() - 1)
 					clicker:set_wielded_item(stack)
@@ -78,8 +87,18 @@ minetest.register_entity("mobkit_sapien:sapien", {
 					return
 				end
 				if itemname == "currency:minegeld_10" then
-					local item = mobkit_sapien.jobs.gen_item(job, 2)
+					core.after(0.1, function()
+						mobkit.animate(self, "mine")
+						core.after(0.1, function()
+							mobkit.animate(self, "stand")
+						end)
+					end)
+					local item
+					if math.random(2) == 1 then
+						item = mobkit_sapien.jobs.gen_item(job, 2)
+					end
 					if item then
+						mobkit.make_sound(self, "gasp")
 						local inv = clicker:get_inventory()
 						if inv:room_for_item("main", item) then
 							inv:add_item("main", item)
@@ -89,6 +108,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 							minetest.add_item(pos, ItemStack(item))
 						end
 					else
+						mobkit.make_sound(self, "idle")
 						local pos = clicker:get_pos()
 						pos.y = pos.y + 1
 						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
