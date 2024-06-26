@@ -12,6 +12,7 @@ function mobkit_sapien.brain(self, prty)
 			local pos = mobkit.get_stand_pos(self)
 			pos.y = pos.y + 2
 			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(job.."_license 1")) end
+			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(mobkit_sapien.jobs.gen_item(job))) end
 			mobkit_sapien.unemploy(self)
 		end
 		mobkit.hq_die(self)				-- kick the bucket
@@ -59,11 +60,12 @@ function mobkit_sapien.brain(self, prty)
 				end
 				if tod <= 3 then
 					mobkit_sapien.hq_work(self, 10)
-				elseif not mobkit.recall(self, "bed") and mobkit_sapien.bednode then 
-					self.act = "find bed"
-					mobkit_sapien.hq_find_bed(self, 10)
 				end
 			end
+		end
+		if prty < 9 and not mobkit.recall(self, "bed") and mobkit_sapien.bednode then 
+			self.act = "find bed"
+			mobkit_sapien.hq_find_bed(self, 9)
 		end
 
 		-- if doing nothing

@@ -25,7 +25,7 @@ end
 function mobkit_sapien.hq_find_tribe(self, prty)
 	local tries = 0
 	local pos = mobkit.get_stand_pos(self)
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 	
 	local func = function(self)
 		local stuck = not mobkit.goto_next_waypoint(self, dest)
@@ -56,7 +56,7 @@ function mobkit_sapien.hq_find_workplace(self, prty)
 	local radius = 1
 	local yaw = 0
 	local stucks = 0
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 	if not mobkit.recall(self, "job") then
 		mobkit_sapien.set_job(self, mobkit_sapien.jobs.random())
 	end
@@ -79,12 +79,10 @@ function mobkit_sapien.hq_find_workplace(self, prty)
 			radius=radius+1
 			if radius > 4 then
 				radius = 1
-				local stuck = not mobkit.goto_next_waypoint(self, dest)
-				if stuck then
-					stucks = stucks + 1
-					if stucks > 2 then
-						dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
-					end
+				mobkit.goto_next_waypoint(self, dest)
+				stucks = stucks + 1
+				if stucks > 5 then
+					dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 				end
 			end
 		end
@@ -97,7 +95,7 @@ function mobkit_sapien.hq_find_bed(self, prty)
 	local radius = 1
 	local yaw = 0
 	local stucks = 0
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 	local ignore = mobkit.recall(self, "ignore")
 	ignore = ignore and vector.from_string(ignore)
 	
@@ -123,6 +121,10 @@ function mobkit_sapien.hq_find_bed(self, prty)
 					if stucks > 2 then
 						dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 					end
+				end
+				local dist = vector.distance(mobkit.get_stand_pos(self), dest)
+				if dist < 1 then
+					dest = mobkit_plus.random_destination(mobkit.get_stand_pos(self), 32)
 				end
 			end
 		end
@@ -168,19 +170,28 @@ function mobkit_sapien.hq_work(self, prty)
 						return true
 					end
 				end
-			elseif mobkit.timer(self, 20) then
-				local inv = get_inv(workpos)
-				if inv:get_size("main") <= 0 then
-					mobkit.forget(self, "job")
-					mobkit.forget(self, "workplace")
-					return true
-				end
-				local jobdef = mobkit_sapien.registered_jobs[job]
-				
-				if math.random(2) > 1 then
-					local item = mobkit_sapien.jobs.gen_item(job)
-					if inv:room_for_item("main", item) then
-						inv:add_item("main", item)
+			else
+				mobkit.animate(self, "stand")
+				if mobkit.timer(self, 20) then
+					core.after(0.1, function()
+						mobkit.animate(self, "mine")
+						core.after(0.1, function()
+							mobkit.animate(self, "stand")
+						end)
+					end)
+					local inv = get_inv(workpos)
+					if inv:get_size("main") <= 0 then
+						mobkit.forget(self, "job")
+						mobkit.forget(self, "workplace")
+						return true
+					end
+					local jobdef = mobkit_sapien.registered_jobs[job]
+					
+					if math.random(2) > 1 then
+						local item = mobkit_sapien.jobs.gen_item(job)
+						if inv:room_for_item("main", item) then
+							inv:add_item("main", item)
+						end
 					end
 				end
 			end
@@ -200,7 +211,7 @@ function mobkit_sapien.hq_sleep(self, prty)
 	if bed then
 		bed = vector.from_string(bed)
 	else
-		bed = mobkit_plus.random_destination(self, 32)
+		bed = vector.round(mobkit.get_stand_pos(self))
 	end
 
 	local func = function(self)
@@ -213,17 +224,18 @@ function mobkit_sapien.hq_sleep(self, prty)
 			mobkit.forget(self, "bed")
 			return true
 		elseif dist > 2 then
-			local stuck = mobkit.goto_next_waypoint(self, bed)
+			local stuck = not mobkit.goto_next_waypoint(self, bed)
 			if stuck then
 				stucks = stucks + 1
 				if stucks >= 5 then
 					mobkit.forget(self, "bed")
 					mobkit.remember(self, "ignore", vector.to_string(bed))
-					return true
+					mobkit.animate(self, "sit")
+					bed = vector.round(mobkit.get_stand_pos(self))
 				end
 			end
 		else
-			if not is_in_group(minetest.get_node(bed).name, "bed") and mobkit.recall(self, bed) then
+			if not is_in_group(minetest.get_node(bed).name, "bed") and mobkit.recall(self, "bed") then
 				mobkit.forget(self, "bed")
 			end
 			mobkit.animate(self, "sit")

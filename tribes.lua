@@ -167,6 +167,13 @@ function mobkit_sapien.tribes.getname(id)
 	return name
 end
 
+function mobkit_sapien.tribes.getpos(id)
+	tribes = minetest.deserialize(storage:get("tribes"))
+	if not tribes or not id or not tribes[id] then return end
+	local origin = minetest.deserialize(tribes[id]).origin
+	return origin
+end
+
 function mobkit_sapien.tribes.at(pos)
 	pos = vector.round(pos)
 	local x, z = pos.x, pos.z

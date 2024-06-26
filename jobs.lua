@@ -21,7 +21,7 @@ if farming then
 			[1] = {"farming:seed_cotton", "farming:seed_wheat"},
 			[2] = {"farming:wheat"},
 			[3] = {},
-			[4] = {"default:blueberry_bush_sappling"},
+			[4] = {"default:blueberry_bush_sapling"},
 			[5] = {"farming:hoe_wood", "farming:flour"},
 			[6] = {"farming:hoe_stone"},
 		}
@@ -125,11 +125,12 @@ function mobkit_sapien.jobs.random()
 		return names[math.random(#names)]
 	end
 end
+
 function mobkit_sapien.jobs.gen_item(jobname)
 	local jobdef = mobkit_sapien.registered_jobs[jobname]
 	if not jobdef or not jobdef.items then return end
 	for i,v in ipairs(jobdef.items) do 
-		if #v > 0 and math.random(1) > 0.5 then
+		if #v > 0 and math.random() > 0.5 then
 			local item = v[math.random(#v)]
 			return item
 		end

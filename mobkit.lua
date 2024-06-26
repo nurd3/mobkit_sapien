@@ -4,7 +4,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 											-- common props
 	physical = true,
 	stepheight = 0.1,				--EVIL!
-	collide_with_objects = true,
+	collide_with_objects = false,
 	collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.2, 0.3},
 	visual = "mesh",
 	mesh = "character.b3d",

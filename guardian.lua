@@ -100,7 +100,7 @@ minetest.register_entity("mobkit_sapien:guardian", {
 											-- common props
 	physical = true,
 	stepheight = 0.1,				--EVIL!
-	collide_with_objects = true,
+	collide_with_objects = false,
 	collisionbox = {-0.4, 0.0, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "character.b3d",
@@ -116,7 +116,7 @@ minetest.register_entity("mobkit_sapien:guardian", {
 	buoyancy = 0.5,						-- portion of hitbox submerged
 	max_speed = 3,
 	jump_height = 2.50,
-	view_range = 32,
+	view_range = 24,
 	lung_capacity = 10,
 	max_hp = 20,
 	attack={range=0.5,damage_groups={fleshy=7}},

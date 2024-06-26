@@ -13,15 +13,17 @@ minetest.register_node("mobkit_sapien:egg", {
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):set(1, 0)
 	end,
+	on_rightclick = function(pos)
+		minetest.set_node(pos, {name="air"})
+		minetest.add_entity(pos, "mobkit_sapien:sapien")
+	end,
 	on_timer = function(pos, elapsed)
 		if math.random(elapsed) > 5 then
-			minetest.set_node(pos, {name="air"})
-			minetest.add_entity(pos, "mobkit_sapien:sapien")
 		else
 			minetest.get_node_timer(pos):set(2, elapsed)
 		end
 	end,
-	
+	light_source = 4,
 })
 
 minetest.register_node("mobkit_sapien:egg_guardian", {
@@ -37,6 +39,10 @@ minetest.register_node("mobkit_sapien:egg_guardian", {
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):set(1, 0)
 	end,
+	on_rightclick = function(pos)
+		minetest.set_node(pos, {name="air"})
+		minetest.add_entity(pos, "mobkit_sapien:guardian")
+	end,
 	on_timer = function(pos, elapsed)
 		if math.random(elapsed) > 5 then
 			minetest.set_node(pos, {name="air"})
@@ -45,7 +51,7 @@ minetest.register_node("mobkit_sapien:egg_guardian", {
 			minetest.get_node_timer(pos):set(2, elapsed)
 		end
 	end,
-	
+	light_source = 7,
 })
 
 local mg_nodes = {"mobkit_sapien:egg"}
