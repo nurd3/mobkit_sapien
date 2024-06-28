@@ -6,12 +6,16 @@ minetest.register_node("mobkit_sapien:egg", {
 	tiles = {"egg.png"},
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = {cracky = 3, falling_node = 1, oddly_breakable_by_hand = 3},
+	groups = {snappy = 3, falling_node = 1, oddly_breakable_by_hand = 3},
 	paramtype = "none",
 	paramtype2 = "none",
 	
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):set(1, 0)
+	end,
+	on_punch = function(pos)
+		minetest.set_node(pos, {name="air"})
+		minetest.add_item(pos, ItemStack("mobkit_sapien:egg"))
 	end,
 	on_rightclick = function(pos)
 		minetest.set_node(pos, {name="air"})
@@ -32,12 +36,16 @@ minetest.register_node("mobkit_sapien:egg_guardian", {
 	tiles = {"egg.png^[hsl:120"},
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = {cracky = 3, falling_node = 1, oddly_breakable_by_hand = 3},
+	groups = {snappy = 3, falling_node = 1, oddly_breakable_by_hand = 3},
 	paramtype = "none",
 	paramtype2 = "none",
 	
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):set(1, 0)
+	end,
+	on_punch = function(pos)
+		minetest.set_node(pos, {name="air"})
+		minetest.add_item(pos, ItemStack("mobkit_sapien:egg_guardian"))
 	end,
 	on_rightclick = function(pos)
 		minetest.set_node(pos, {name="air"})

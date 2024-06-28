@@ -74,14 +74,14 @@ function mobkit_sapien.guardian_brain(self, prty)
 				end
 			end
 		end
-		if math.random(10) == 1 then
+		if math.random(15) == 1 then
 			mobkit.make_sound(self, "idle")
 		end
 		if prty < 10 then
 			local dist = mobkit_sapien.tribes.get_dist(self, tribe)
 			local hostile = get_nearest_hostile(self)
 			if hostile then
-				mobkit.tribes.add_enemy(tribe, hostile)
+				mobkit_sapien.tribes.add_enemy(tribe, hostile)
 				mobkit.make_sound(self, "hunt")
 				mobkit.hq_hunt(self, 15, hostile)
 			end

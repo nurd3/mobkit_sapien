@@ -86,7 +86,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 					mobkit_sapien.set_job(self, newjob)
 					return
 				end
-				if itemname == "currency:minegeld_10" then
+				if itemname == "currency:minegeld_5" or itemname == "default:gold_ingot" then
 					core.after(0.1, function()
 						mobkit.animate(self, "mine")
 						core.after(0.1, function()
