@@ -12,12 +12,8 @@ mobkit_sapien.register_job("mobkit_sapien:breeder", {
 mobkit_sapien.register_job("mobkit_sapien:trader", {
     description = S"Trader",
     items = {
-        [1] = {"mobkit_sapien:lump"},
-        [2] = {"mobkit_sapien:ingot"},
-        [3] = {"mobkit_sapien:lump_guardian"},
-        [4] = {"mobkit_sapien:eye", "mobkit_sapien:ingot_guardian"},
-        [5] = {"mobkit_sapien:block"},
-        [6] = {"mobkit_sapien:eye_guardian"},
-        [7] = {"mobkit_sapien:block_guardian"}
+        [1] = {"mobkit_sapien:toilet_paper"},
+        [2] = {""},
+        [3] = {"mobkit_sapien:egg"},
     }
 })

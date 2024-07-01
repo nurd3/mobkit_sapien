@@ -67,7 +67,7 @@ minetest.register_node("mobkit_sapien:egg_guardian", {
 ------------------
 -- TOILET PAPER --
 ------------------
-minetest.register_craftitem("mobkit_sapien:toilet_paoer", {
+minetest.register_craftitem("mobkit_sapien:toilet_paper", {
 	description = S"Toilet Paper",
 	inventory_image = "sapien_toilet_paper.png",
 	groups = {flammable = 1, toilet_paper = 1},
