@@ -21,12 +21,18 @@ function table.clone(t)
 	return {table.unpack(t)}
 end
 
+-- util functions
 dofile(path.."/mobkit_plus.lua")
+dofile(path.."/names.lua")
+
+-- behaviours
 dofile(path.."/high.lua")
-dofile(path.."/brain.lua")
-dofile(path.."/mobkit.lua")
+
+-- libraries
 dofile(path.."/jobs.lua")
 dofile(path.."/tribes.lua")
-dofile(path.."/names.lua")
-dofile(path.."/egg.lua")
+
+-- entities & stuff
+dofile(path.."/eggs.lua")
 dofile(path.."/guardian.lua")
+dofile(path.."/sapien.lua")

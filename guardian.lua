@@ -1,6 +1,8 @@
 
+-- SETTINGS --
 local active_block_range = tonumber(minetest.get_mapgen_setting('active_block_range')) or 3
 
+-- UTIL FUNCTIONS --
 local function get_nearest_hostile(self)
 	local retv = nil					    -- return value
 	local dist = active_block_range*64	    -- maximum distance
@@ -24,6 +26,7 @@ local function get_nearest_hostile(self)
 	return retv
 end
 
+-- BRAIN --
 function mobkit_sapien.guardian_brain(self, prty)
 
 	if mobkit.timer(self,1) then mobkit_plus.node_dps_dmg(self) end
@@ -96,6 +99,8 @@ function mobkit_sapien.guardian_brain(self, prty)
 
 end
 
+
+-- ENTITY --
 minetest.register_entity("mobkit_sapien:guardian", {
 											-- common props
 	physical = true,

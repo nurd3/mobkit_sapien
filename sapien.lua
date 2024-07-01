@@ -6,13 +6,18 @@ function mobkit_sapien.brain(self, prty)
 	if self.hp <= 0 or self.dead then	-- if is dead
 		mobkit.make_sound(self, "die")
 		mobkit.clear_queue_high(self)	-- cease all activity
+		
+		-- leave tribe
 		mobkit_sapien.tribes.leave(mobkit.recall(self, "tribe"))
+
+		-- if has valid job
 		local job = mobkit.recall(self, "job")
 		if job and mobkit_sapien.registered_jobs[job] then
-			local pos = mobkit.get_stand_pos(self)
-			pos.y = pos.y + 2
-			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(job.."_license 1")) end
-			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(mobkit_sapien.jobs.gen_item(job))) end
+			-- license drop
+			mobkit_plus.drop(self, 0.5, job.."_license", 1)
+			-- random job item drop
+			mobkit_plus.drop(self, 0.5, mobkit_sapien.jobs.gen_item(job), 1)
+			-- unemploy code
 			mobkit_sapien.unemploy(self)
 		end
 		mobkit.hq_die(self)				-- kick the bucket
@@ -125,77 +130,108 @@ minetest.register_entity("mobkit_sapien:sapien", {
 	
 	on_punch = function (self, puncher, time_from_last_punch, tool_capabilities, dir)
 		if mobkit.is_alive(self) and mobkit.is_alive(puncher) then
+			-- run away
 			mobkit.hq_runfrom(self, 15, obj)
+
+			-- add enemy to tribe
 			mobkit_sapien.tribes.add_enemy(mobkit.recall(self, "tribe"), puncher)
 		end
+		
+		-- util function
 		mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
 	end,
+
 	on_rightclick = function (self, clicker)
+		-- generate name if still nameless
 		if not mobkit.recall(self, "name") then mobkit.remember(self, "name", mobkit_sapien.gen_name()) end
+		
+		-- get job
 		local job = mobkit.recall(self, "job")
 		local jobdef
 		if job then
 			jobdef = mobkit_sapien.registered_jobs[job]
 		end
+
+		-- check wielded stack isn't empty
 		local stack = clicker:get_wielded_item()
-		if stack:get_name() then
-			local itemname = clicker:get_wielded_item():get_name()
-			local itemdef = minetest.registered_craftitems[itemname]
-			if itemdef then
-				if itemdef.mobkit_sapien_assign_job then
-					core.after(0.1, function()
-						mobkit.animate(self, "mine")
-						core.after(0.1, function()
-							mobkit.animate(self, "stand")
-						end)
-					end)
-					local oldjob, newjob = job, itemdef.mobkit_sapien_assign_job
-					if newjob == oldjob then
-						mobkit.make_sound(self, "idle")
-						local pos = clicker:get_pos()
-						pos.y = pos.y + 1
-						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
-					else
-						mobkit.make_sound(self, "gasp")
-					end
-					stack:set_count(stack:get_count() - 1)
-					clicker:set_wielded_item(stack)
-					mobkit_sapien.set_job(self, newjob)
-					return
-				end
-				if itemname == "currency:minegeld_5" or itemname == "default:gold_ingot" then
-					core.after(0.1, function()
-						mobkit.animate(self, "mine")
-						core.after(0.1, function()
-							mobkit.animate(self, "stand")
-						end)
-					end)
-					local item
-					if math.random(2) == 1 then
-						item = mobkit_sapien.jobs.gen_item(job, 2)
-					end
-					if item then
-						mobkit.make_sound(self, "gasp")
-						local inv = clicker:get_inventory()
-						if inv:room_for_item("main", item) then
-							inv:add_item("main", item)
-						else
-							local pos = clicker:get_pos()
-							pos.y = pos.y + 1
-							minetest.add_item(pos, ItemStack(item))
-						end
-					else
-						mobkit.make_sound(self, "idle")
-						local pos = clicker:get_pos()
-						pos.y = pos.y + 1
-						minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
-					end
-					stack:set_count(stack:get_count() - 1)
-					clicker:set_wielded_item(stack)
-					return
-				end
+		if not stack:get_name() then
+			return
+		end
+
+		-- check wielded stack isn't undefined
+		local itemname = stack:get_name()
+		local itemdef = minetest.registered_craftitems[itemname]
+		if not itemdef then
+			return
+		end
+
+		-- job assigning
+		if itemdef.mobkit_sapien_assign_job then
+			-- animation
+			core.after(0.1, function()
+				mobkit.animate(self, "mine")
+				core.after(0.1, function()
+					mobkit.animate(self, "stand")
+				end)
+			end)
+			
+			local oldjob, newjob = job, itemdef.mobkit_sapien_assign_job
+
+			-- if job is the same as old then drop the item
+			if newjob == oldjob then
+				mobkit.make_sound(self, "idle")
+				local pos = clicker:get_pos()
+				pos.y = pos.y + 1
+				minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
+			else
+				mobkit.make_sound(self, "gasp")
 			end
+
+			-- update item stack
+			stack:set_count(stack:get_count() - 1)
+			clicker:set_wielded_item(stack)
+			mobkit_sapien.set_job(self, newjob)
+			return
+		end
+
+		-- trading
+		if mobkit_sapien.is_tradable(itemname, itemdef) then
+			-- animation
+			core.after(0.1, function()
+				mobkit.animate(self, "mine")
+				core.after(0.1, function()
+					mobkit.animate(self, "stand")
+				end)
+			end)
+			
+			local item
+			-- sapien may not accept trade
+			if math.random(2) == 1 then
+				item = mobkit_sapien.jobs.gen_item(job, 2)
+			end
+			
+			if item then
+				mobkit.make_sound(self, "gasp")
+				local inv = clicker:get_inventory()
+				-- give item directly if possible, drop if not
+				if inv:room_for_item("main", item) then
+					inv:add_item("main", item)
+				else
+					local pos = clicker:get_pos()
+					pos.y = pos.y + 1
+					minetest.add_item(pos, ItemStack(item))
+				end
+			else	-- sapien either didn't accept trade or is jobless
+				mobkit.make_sound(self, "idle")
+				local pos = clicker:get_pos()
+				pos.y = pos.y + 1
+				minetest.add_item(pos, ItemStack(stack:get_name().." 1"))
+			end
+
+			-- update item stack
+			stack:set_count(stack:get_count() - 1)
+			clicker:set_wielded_item(stack)
+			return
 		end
 	end
-
 })
