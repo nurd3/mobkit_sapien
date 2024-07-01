@@ -1,5 +1,8 @@
 local S = mobkit_sapien.get_translator
 
+----------
+-- EGGS --
+----------
 minetest.register_node("mobkit_sapien:egg", {
 	description = S"Sapien Egg",
 	drawtype = "normal",
@@ -29,7 +32,6 @@ minetest.register_node("mobkit_sapien:egg", {
 	end,
 	light_source = 4,
 })
-
 minetest.register_node("mobkit_sapien:egg_guardian", {
 	description = S"Guardian Egg",
 	drawtype = "normal",
@@ -60,6 +62,16 @@ minetest.register_node("mobkit_sapien:egg_guardian", {
 		end
 	end,
 	light_source = 7,
+})
+
+------------------
+-- TOILET PAPER --
+------------------
+minetest.register_craftitem("mobkit_sapien:toilet_paoer", {
+	description = S"Toilet Paper",
+	inventory_image = "sapien_toilet_paper.png",
+	groups = {flammable = 1, toilet_paper = 1},
+	tradable = true,
 })
 
 local mg_nodes = {"mobkit_sapien:egg"}

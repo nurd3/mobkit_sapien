@@ -1,6 +1,8 @@
 local gamedata = minetest.get_game_info()
 local path = mobkit_sapien.get_modpath
 
+dofile(path.."/builtin/default.lua")
+
 -- util function for checking if file exists
 function file_exists(name)
     local f=io.open(name,"r")

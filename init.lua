@@ -34,7 +34,7 @@ dofile(path.."/jobs.lua")
 dofile(path.."/tribes.lua")
 
 -- entities & stuff
-dofile(path.."/eggs.lua")
+dofile(path.."/items.lua")
 dofile(path.."/guardian.lua")
 dofile(path.."/sapien.lua")
 

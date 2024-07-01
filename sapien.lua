@@ -1,3 +1,32 @@
+--------------------
+-- UTIL FUNCTIONS --
+--------------------
+function mobkit_sapien.punch_anim(self)
+	core.after(0.1, function()
+		mobkit.animate(self, "mine")
+		core.after(0.1, function()
+			mobkit.animate(self, "stand")
+		end)
+	end)
+end
+-------------
+-- TRADING --
+-------------
+mobkit_sapien.registered_tradables = {}
+function mobkit_sapien.register_tradable(name)
+	table.insert(mobkit_sapien.registered_tradables, name)
+end
+function mobkit_sapien.is_tradable(itemname, itemdef)
+	if not itemname or not itemdef then return end
+	if itemdef.tradable then return true end
+	for _,v in ipairs(mobkit_sapien.registered_tradables) do
+        if v == itemname then
+            return true
+        end
+    end
+	return false
+end
+
 -----------
 -- BRAIN --
 -----------
@@ -174,12 +203,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 		-- job assigning
 		if itemdef.mobkit_sapien_assign_job then
 			-- animation
-			core.after(0.1, function()
-				mobkit.animate(self, "mine")
-				core.after(0.1, function()
-					mobkit.animate(self, "stand")
-				end)
-			end)
+			mobkit_sapien.punch_anim(self)
 			
 			local oldjob, newjob = job, itemdef.mobkit_sapien_assign_job
 
@@ -203,12 +227,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 		-- trading
 		if mobkit_sapien.is_tradable(itemname, itemdef) then
 			-- animation
-			core.after(0.1, function()
-				mobkit.animate(self, "mine")
-				core.after(0.1, function()
-					mobkit.animate(self, "stand")
-				end)
-			end)
+			mobkit_sapien.punch_anim(self)
 			
 			local item
 			-- sapien may not accept trade

@@ -27,7 +27,7 @@ if farming then
 end
 
 if currency then
-	mobkit_sapien.register_job("mobkit_sapien:trader", {
+	mobkit_sapien.register_job(":mobkit_sapien:trader", {
 		description = S"Trader",
 		eco = 2,
 		items = {
@@ -100,3 +100,5 @@ mobkit_sapien.register_job("mobkit_sapien:lumberjack", {
 		[6] = {"default:axe_stone"},
 	}
 })
+
+mobkit_sapien.register_tradable("default:gold_ingot")
