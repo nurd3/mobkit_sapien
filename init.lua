@@ -38,5 +38,5 @@ dofile(path.."/eggs.lua")
 dofile(path.."/guardian.lua")
 dofile(path.."/sapien.lua")
 
--- specific game support
-dofile(path.."/games.lua")
+-- builtin data handling
+dofile(path.."/builtin.lua")

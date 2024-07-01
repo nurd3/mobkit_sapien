@@ -14,8 +14,8 @@ if gamedata and gamedata.id then
     if file_exists(src) then
         dofile(src)
     else
-        minetest.log("warning", "mobkit_sapiens does not support game: "..gamedata.id)
+        minetest.log("warning", "[MOD] mobkit_sapien does not support game: "..gamedata.id)
     end
 else    -- theoretically this message shouldn't show up
-    minetest.log("warning", "mobkit_sapiens is confused how you're running this (invalid game data)")
+    minetest.log("warning", "[MOD] mobkit_sapien is confused how you're running this (invalid game data)")
 end

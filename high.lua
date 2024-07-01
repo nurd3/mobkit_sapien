@@ -26,12 +26,17 @@ function mobkit_sapien.hq_find_tribe(self, prty)
 	local tries = 0
 	local pos = mobkit.get_stand_pos(self)
 	local dest = mobkit_plus.random_destination(self, 32)
+	local job = mobkit.recall("job")
 	
 	local func = function(self)
 		local stuck = not mobkit.goto_next_waypoint(self, dest)
 		if tries >= 10 or stuck then
 			local id = mobkit_sapien.tribes.new(mobkit.recall(self, "name").."land", mobkit.get_stand_pos(self))
 			mobkit.remember(self, "tribe", id)
+			mobkit_sapien.tribes.join(id)
+			if job then
+				mobkit_sapien.tribes.employ(id, job)
+			end
 			return true
 		end
 		if mobkit.timer(self, 1) then
@@ -41,6 +46,9 @@ function mobkit_sapien.hq_find_tribe(self, prty)
 			if id then
 				mobkit.remember(self, "tribe", id)
 				mobkit_sapien.tribes.join(id)
+				if job then
+					mobkit_sapien.tribes.employ(id, job)
+				end
 				return true
 			else
 				tries = tries + 1

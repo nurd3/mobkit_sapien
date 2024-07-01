@@ -15,7 +15,7 @@ function mobkit_sapien.brain(self, prty)
 		if job and mobkit_sapien.registered_jobs[job] then
 			-- license drop
 			mobkit_plus.drop(self, 0.5, job.."_license", 1)
-			-- random job item drop
+			-- random item drop
 			mobkit_plus.drop(self, 0.5, mobkit_sapien.jobs.gen_item(job), 1)
 			-- unemploy code
 			mobkit_sapien.unemploy(self)
