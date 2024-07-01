@@ -1,3 +1,6 @@
+-----------
+-- BRAIN --
+-----------
 function mobkit_sapien.brain(self, prty)
 
 	if mobkit.timer(self,1) then mobkit_plus.node_dps_dmg(self) end
@@ -82,6 +85,9 @@ function mobkit_sapien.brain(self, prty)
 
 end
 
+------------
+-- ENTITY --
+------------
 minetest.register_entity("mobkit_sapien:sapien", {
 											-- common props
 	physical = true,

@@ -1,7 +1,10 @@
 
 local S = mobkit_sapien.get_translator
 
+------------------
 -- JOBS LIBRARY --
+-----------------
+
 mobkit_sapien.jobs = {}
 
 function mobkit_sapien.jobs.random()
@@ -27,7 +30,6 @@ function mobkit_sapien.jobs.gen_item(jobname)
 	end
 end
 
--- REGISTERED JOBS --
 mobkit_sapien.registered_jobs = {}
 
 function mobkit_sapien.register_job(name, def)
