@@ -1,3 +1,5 @@
+local S = mobkit_sapien.get_translator
+
 ------------------
 -- BUILTIN JOBS --
 ------------------
