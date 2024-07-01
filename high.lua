@@ -26,7 +26,7 @@ function mobkit_sapien.hq_find_tribe(self, prty)
 	local tries = 0
 	local pos = mobkit.get_stand_pos(self)
 	local dest = mobkit_plus.random_destination(self, 32)
-	local job = mobkit.recall("job")
+	local job = mobkit.recall(self, "job")
 	
 	local func = function(self)
 		local stuck = not mobkit.goto_next_waypoint(self, dest)
