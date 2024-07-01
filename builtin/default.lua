@@ -1,3 +1,7 @@
+------------------
+-- BUILTIN JOBS --
+------------------
+
 mobkit_sapien.register_job("mobkit_sapien:breeder", {
     description = S"Breeder",
     items = {
@@ -16,4 +20,16 @@ mobkit_sapien.register_job("mobkit_sapien:trader", {
         [2] = {""},
         [3] = {"mobkit_sapien:egg"},
     }
+})
+
+-------------------------
+-- BUILTIN TRIBETRAITS --
+-------------------------
+mobkit_sapien.register_tribetrait("mobkit_sapien:xenophobic", {
+    chance = 0.1,
+    hostile_check = function(self, ent)
+        return mobkit.is_alive(ent) and 
+            (ent:is_player()
+            or mobkit.recall(self, "tribe") ~= mobkit.recall(ent, "tribe"))
+    end
 })

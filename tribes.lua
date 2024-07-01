@@ -6,6 +6,14 @@ local enemies = {}
 
 local storage = minetest.get_mod_storage()
 
+-----------------
+-- TRIBETRAITS --
+-----------------
+mobkit_sapien.registered_tribetraits = {}
+function mobkit_sapien.register_tribetrait(name, def)
+	
+end
+
 -------------------------
 -- BASIC TRIBE HANDING --
 -------------------------
@@ -36,7 +44,7 @@ function mobkit_sapien.tribes.new(name, origin)
 
 	local id = mobkit_sapien.tribes.get_new_id()
 
-	tribes[id] = minetest.serialize({name = name, origin = vector.round(origin), level = 1})
+	tribes[id] = minetest.serialize({name = name, origin = vector.round(origin), level = 1, tribetraits = {}})
 
 	-- update tribe data
 	storage:set_string("tribes", minetest.serialize(tribes))
