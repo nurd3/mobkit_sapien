@@ -335,6 +335,7 @@ function mobkit_sapien.tribes.update_0x3x0()
 	local old = minetest.deserialize(storage:get("tribes"))
 	mobkit_sapien.tribes.clear()
 
+	if not old then return end
 	for _,data in ipairs(old) do
 		local t = minetest.deserialize(data)
 
