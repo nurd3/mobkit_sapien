@@ -6,6 +6,7 @@ local path = minetest.get_modpath"mobkit_sapien"
 mobkit_sapien = {}
 
 mobkit_sapien.get_translator = minetest.get_translator"mobkit_sapien"
+mobkit_sapien.get_modpath = path
 
 if beds then
 	mobkit_sapien.bednode = "beds:bed"
@@ -36,3 +37,6 @@ dofile(path.."/tribes.lua")
 dofile(path.."/eggs.lua")
 dofile(path.."/guardian.lua")
 dofile(path.."/sapien.lua")
+
+-- specific game support
+dofile(path.."/games.lua")

@@ -1,4 +1,4 @@
-if farming then
+f farming then
 	mobkit_sapien.register_job("mobkit_sapien:farmer", {
 		description = S"Farmer",
 		items = {
