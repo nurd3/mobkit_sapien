@@ -6,7 +6,7 @@ local S = mobkit_sapien.get_translator
 minetest.register_node("mobkit_sapien:egg", {
 	description = S"Sapien Egg",
 	drawtype = "normal",
-	tiles = {"egg.png"},
+	tiles = {"sapien_egg.png"},
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {snappy = 3, falling_node = 1, oddly_breakable_by_hand = 3},
@@ -35,7 +35,7 @@ minetest.register_node("mobkit_sapien:egg", {
 minetest.register_node("mobkit_sapien:egg_guardian", {
 	description = S"Guardian Egg",
 	drawtype = "normal",
-	tiles = {"egg.png^[hsl:120"},
+	tiles = {"sapien_egg.png^[hsl:120"},
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {snappy = 3, falling_node = 1, oddly_breakable_by_hand = 3},
