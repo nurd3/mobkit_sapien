@@ -42,9 +42,10 @@ end
 
 -- new tribe
 function mobkit_sapien.tribes.new(name, origin)
-	if not tribes then tribes = {} end
 
 	local id = mobkit_sapien.tribes.get_new_id()
+
+	if not tribes then tribes = {} end
 
 	tribes[id] = minetest.serialize({name = name, origin = vector.round(origin), level = 1, tribetraits = {}})
 
