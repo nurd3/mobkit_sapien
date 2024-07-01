@@ -111,7 +111,7 @@ minetest.register_entity("mobkit_sapien:guardian", {
 	collide_with_objects = false,
 	collisionbox = {-0.4, 0.0, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
-	mesh = "character.b3d",
+	mesh = "sapien.b3d",
 	textures = {"sapien.png^[hsl:120"},
 	visual_size = {x = 1.7, y = 1.25},
 	static_save = true,

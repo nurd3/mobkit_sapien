@@ -20,7 +20,7 @@ end
 
 -- clear all tribes
 function mobkit_sapien.tribes.clear()
-	storage:set_string("tribes", "")
+	storage:set_string("tribes", nil)
 	tribes = {}
 	enemies = {}
 end
