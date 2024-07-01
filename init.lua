@@ -22,6 +22,8 @@ function table.clone(t)
 	return {table.unpack(t)}
 end
 
+dofile(path.."/commands.lua")
+
 -- util functions
 dofile(path.."/mobkit_plus.lua")
 dofile(path.."/names.lua")

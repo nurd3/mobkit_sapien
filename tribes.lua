@@ -75,6 +75,15 @@ function mobkit_sapien.tribes.get(id)
 	return minetest.deserialize(tribes[id])
 end
 
+-- iterator
+function mobkit_sapien.tribes.iterator(id)
+	tribes = minetest.deserialize(storage:get("tribes"))
+
+	if not tribes or not id then return function () end end
+
+	return pairs(minetest.deserialize(tribes[id]))
+end
+
 -- delete tribe
 function mobkit_sapien.tribes.delete(id)
 	tribes[id] = nil
