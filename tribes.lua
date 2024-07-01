@@ -29,6 +29,8 @@ function mobkit_sapien.tribes.get_new_id()
 	tribes = minetest.deserialize(storage:get("tribes"))
 	local id
 
+	if not tribes then return "0" end
+
 	for k,_ in pairs(tribes) do
 		if not id or tonumber(k) < id then
 			id = tonumber(k)
