@@ -42,3 +42,8 @@ dofile(path.."/sapien.lua")
 
 -- builtin data handling
 dofile(path.."/builtin.lua")
+
+-- library specific
+if natural_entities then
+	dofile(path.."/natural_entities.lua")
+end
