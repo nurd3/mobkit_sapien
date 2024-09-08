@@ -4,6 +4,10 @@ mobkit_plus = {}
 -- util drop function
 function mobkit_plus.drop(self, chance, item, amount)
 
+	if not item or not self then
+		return
+	end
+
 	-- amount handling
 	local amt = amount or 1
 
