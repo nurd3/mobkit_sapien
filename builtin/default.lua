@@ -19,7 +19,7 @@ mobkit_sapien.register_job("mobkit_sapien:trader", {
     description = S"Trader",
     items = {
         [1] = {"mobkit_sapien:toilet_paper"},
-        [2] = {""},
+        [2] = {},
         [3] = {"mobkit_sapien:egg"},
     }
 })

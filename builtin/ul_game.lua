@@ -20,3 +20,13 @@ mobkit_sapien.register_job("mobkit_sapien:trafficker", {
         [6] = {"ul_basic:sword", "ul_mobs:lootglob"}
     }
 })
+mobkit_sapien.register_job("mobkit_sapien:miner", {
+    description = S"Miner",
+    items = {
+        [1] = {"ul_basic:ore"},
+        [2] = {"ul_basic:ore_rare", "ul_basic:lantern"},
+        [3] = {"ul_basic:ore_super", "ul_basic:pick"},
+        [4] = {"ul_magic:shard"},
+        [5] = {"ul_magic:crystal", "ul_mobs:mgull"}
+    }
+})

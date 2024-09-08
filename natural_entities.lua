@@ -8,5 +8,9 @@ natural_entities.register_spawn("mobkit_sapien:sapiens", {
     entities = {
         ["mobkit_sapien:sapien"] = 0.8,
         ["mobkit_sapien:guardian"] = 0.1
-    }
+    },
+
+    check = function ()
+        return true
+    end
 })
