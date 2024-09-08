@@ -1,3 +1,5 @@
+local S = mobkit_sapien.get_translator
+
 mobkit_sapien.register_job("mobkit_sapien:hunter", {
     description = S"Monster Hunter",
     items = {
