@@ -48,7 +48,10 @@ function mobkit_sapien.brain(self, prty)
 			-- license drop
 			mobkit_plus.drop(mobkit.get_stand_pos(self), 0.5, job.."_license", 1)
 			-- random item drop
-			mobkit_plus.drop(mobkit.get_stand_pos(self), 0.5, mobkit_sapien.jobs.gen_item(job), 1)
+			local item = mobkit_sapien.jobs.gen_item(job)
+			if not item then
+				mobkit_plus.drop(mobkit.get_stand_pos(self), 0.5, item, 1)
+			end
 			-- unemploy code
 			mobkit_sapien.unemploy(self)
 		end
