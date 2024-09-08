@@ -2,11 +2,7 @@ mobkit_plus = {}
 
 
 -- util drop function
-function mobkit_plus.drop(self, chance, item, amount)
-
-	if not item or not self then
-		return
-	end
+function mobkit_plus.drop(pos, chance, item, amount)
 
 	-- amount handling
 	local amt = amount or 1
@@ -49,7 +45,7 @@ function mobkit_plus.drop(self, chance, item, amount)
 	end
 
 	-- positioning
-	local pos = mobkit.get_stand_pos(self)
+	local pos = vector.copy(pos)
 	pos.y = pos.y + 2
 
 	if math.random() < chance then
