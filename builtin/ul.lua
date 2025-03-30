@@ -7,7 +7,7 @@ mobkit_sapien.register_job("mobkit_sapien:hunter", {
 		[2] = {},
 		[3] = {"ul_magic:heal"},
 		[4] = {},
-		[5] = {"ul_basic:knife", "ul_magic:regeneration"},
+		[5] = {"ul_basic:knife", "ul_magic:regen"},
 		[6] = {"ul_basic:sword", "ul_mobs:big_eye"}
 	}
 })
