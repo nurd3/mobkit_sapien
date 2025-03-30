@@ -25,7 +25,7 @@ end
 function mobkit_sapien.hq_find_tribe(self, prty)
 	local tries = 0
 	local pos = mobkit.get_stand_pos(self)
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_sapien.random_destination(self, 32)
 	local job = mobkit.recall(self, "job")
 	
 	local func = function(self)
@@ -64,7 +64,7 @@ function mobkit_sapien.hq_find_workplace(self, prty)
 	local radius = 1
 	local yaw = 0
 	local stucks = 0
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_sapien.random_destination(self, 32)
 	if not mobkit.recall(self, "job") then
 		mobkit_sapien.set_job(self, mobkit_sapien.jobs.random())
 	end
@@ -90,7 +90,7 @@ function mobkit_sapien.hq_find_workplace(self, prty)
 				mobkit.goto_next_waypoint(self, dest)
 				stucks = stucks + 1
 				if stucks > 5 then
-					dest = mobkit_plus.random_destination(self, 32)
+					dest = mobkit_sapien.random_destination(self, 32)
 				end
 			end
 		end
@@ -103,7 +103,7 @@ function mobkit_sapien.hq_find_bed(self, prty)
 	local radius = 1
 	local yaw = 0
 	local stucks = 0
-	local dest = mobkit_plus.random_destination(self, 32)
+	local dest = mobkit_sapien.random_destination(self, 32)
 	local ignore = mobkit.recall(self, "ignore")
 	ignore = ignore and vector.from_string(ignore)
 	
@@ -127,12 +127,12 @@ function mobkit_sapien.hq_find_bed(self, prty)
 				if stuck then
 					stucks = stucks + 1
 					if stucks > 2 then
-						dest = mobkit_plus.random_destination(self, 32)
+						dest = mobkit_sapien.random_destination(self, 32)
 					end
 				end
 				local dist = vector.distance(mobkit.get_stand_pos(self), dest)
 				if dist < 1 then
-					dest = mobkit_plus.random_destination(self, 32)
+					dest = mobkit_sapien.random_destination(self, 32)
 				end
 			end
 		end

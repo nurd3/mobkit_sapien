@@ -32,7 +32,7 @@ end
 -----------
 function mobkit_sapien.brain(self, prty)
 
-	if mobkit.timer(self,1) then mobkit_plus.node_dps_dmg(self) end
+	if mobkit.timer(self,1) then mobkit_sapien.node_dps_dmg(self) end
 	mobkit.vitals(self)
 
 	if self.hp <= 0 or self.dead then	-- if is dead
@@ -46,15 +46,18 @@ function mobkit_sapien.brain(self, prty)
 		local job = mobkit.recall(self, "job")
 		if job and mobkit_sapien.registered_jobs[job] then
 			-- license drop
-			mobkit_plus.drop(mobkit.get_stand_pos(self), 0.5, job.."_license", 1)
+			mobkit_sapien.drop(mobkit.get_stand_pos(self), 0.5, job.."_license", 1)
 			-- random item drop
 			local item = mobkit_sapien.jobs.gen_item(job)
 			if item then
-				mobkit_plus.drop(mobkit.get_stand_pos(self), 0.5, item, 1)
+				mobkit_sapien.drop(mobkit.get_stand_pos(self), 0.5, item, 1)
 			end
 			-- unemploy code
 			mobkit_sapien.unemploy(self)
 		end
+		self.object:set_properties {
+			collisionbox = {0,0,0,0,0,0}
+		}
 		mobkit.hq_die(self)				-- kick the bucket
 		return
 	end
@@ -176,7 +179,7 @@ minetest.register_entity("mobkit_sapien:sapien", {
 		end
 		
 		-- util function
-		mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
+		mobkit_sapien.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
 	end,
 
 	on_rightclick = function (self, clicker)

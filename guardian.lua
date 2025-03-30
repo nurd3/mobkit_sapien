@@ -31,7 +31,7 @@ end
 -----------
 function mobkit_sapien.guardian_brain(self, prty)
 
-	if mobkit.timer(self,1) then mobkit_plus.node_dps_dmg(self) end
+	if mobkit.timer(self,1) then mobkit_sapien.node_dps_dmg(self) end
 	mobkit.vitals(self)
 
 	if self.hp <= 0 or self.dead then	-- if is dead
@@ -45,6 +45,9 @@ function mobkit_sapien.guardian_brain(self, prty)
 			if math.random(2) > 1 then minetest.add_item(pos, ItemStack(job.."_license 1")) end
 			mobkit_sapien.unemploy(self)
 		end
+		self.object:set_properties {
+			collisionbox = {0,0,0,0,0,0}
+		}
 		mobkit.hq_die(self)				-- kick the bucket
 		return
 	end
@@ -157,7 +160,7 @@ minetest.register_entity("mobkit_sapien:guardian", {
 			mobkit.hq_hunt(self, 15, obj)
 			mobkit_sapien.tribes.add_enemy(mobkit.recall(self, "tribe"), puncher)
 		end
-		mobkit_plus.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
+		mobkit_sapien.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
 	end,
 
 })

@@ -25,7 +25,7 @@ end
 dofile(path.."/commands.lua")
 
 -- util functions
-dofile(path.."/mobkit_plus.lua")
+dofile(path.."/functions.lua")
 dofile(path.."/names.lua")
 
 -- behaviours
