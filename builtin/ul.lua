@@ -33,12 +33,21 @@ mobkit_sapien.register_job("mobkit_sapien:miner", {
 	}
 })
 mobkit_sapien.register_job("mobkit_sapien:builder", {
-	description = S"Miner",
+	description = S"Builder",
 	items = {
 		[1] = {"ul_basic:building"},
 		[2] = {"ul_basic:building", "ul_basic:lamp"},
 		[3] = {"ul_basic:door", "ul_basic:window"},
 		[4] = {"ul_magic:shard"}
+	}
+})
+mobkit_sapien.register_job("mobkit_sapien:mage", {
+	description = S"Mage",
+	items = {
+		[1] = {"ul_magic:fireball", "ul_magic:ring", "ul_magic:spell"},
+		[2] = {"ul_magic:heal", "ul_magic:poison", "ul_magic:teleport", "ul_magic:launch", "ul_magic:regen"},
+		[3] = {"ul_magic:darkness", "ul_magic:cloak", "ul_magic:light", "ul_magic:levitation"},
+		[4] = {"ul_magic:shard", "ul_magic:runestone", "ul_magic:moon", "ul_magic:sun", "ul_magic:blood"}
 	}
 })
 
