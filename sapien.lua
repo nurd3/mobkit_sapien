@@ -84,7 +84,8 @@ function mobkit_sapien.brain(self, prty)
 				if enemies and #enemies > 0 then
 					local obj = enemies[math.random(#enemies)]
 					if mobkit.is_alive(obj) then
-						if vector.distance(mobkit.get_stand_pos(self), obj:get_pos()) < self.view_range*1.1 then
+						if vector.distance(mobkit.get_stand_pos(self), obj:get_pos()) < self.view_range*1.1
+						and core.line_of_sight(self.object:get_pos(), obj:get_pos()) then
 							mobkit.make_sound(self, "gasp")
 							mobkit.hq_runfrom(self, 15, obj)
 						end

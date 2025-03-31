@@ -24,6 +24,18 @@ mobkit_sapien.register_job("mobkit_sapien:trader", {
     }
 })
 
+local license_items = {}
+mobkit_sapien.register_job("mobkit_sapien:licenser", {
+	description = S"Licenser",
+	items = {[1] = license_items}
+})
+
+core.register_mods_loaded(function()
+	for k,_ in pairs(mobkit_sapien.registered_jobs)
+	do table.insert(license_items, k.."_license")
+	end
+end)
+
 -------------------------
 -- BUILTIN TRIBETRAITS --
 -------------------------

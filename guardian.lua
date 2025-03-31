@@ -14,7 +14,8 @@ local function get_nearest_hostile(self)
 		if mobkit.is_alive(obj) or obj:is_player() and luaent and luaent.name == name then
 			local opos = obj:get_pos()
 			local odist = math.abs(opos.x-pos.x) + math.abs(opos.z-pos.z)
-			if odist < dist then
+			if odist < dist
+			and core.line_of_sight(pos, opos) then
 				if not obj.isinliquid and
 				luaent and luaent.type == "monster" then
 					dist = odist
@@ -74,7 +75,8 @@ function mobkit_sapien.guardian_brain(self, prty)
 				if enemies and #enemies > 0 then
 					local obj = enemies[math.random(#enemies)]
 					if mobkit.is_alive(obj) then
-						if vector.distance(mobkit.get_stand_pos(self), obj:get_pos()) < self.view_range*1.1 then
+						if vector.distance(mobkit.get_stand_pos(self), obj:get_pos()) < self.view_range*1.1
+						and core.line_of_sight(self.object:get_pos(), obj:get_pos()) then
 							mobkit.make_sound(self, "hunt")
 							mobkit.hq_hunt(self, 15, obj)
 						end

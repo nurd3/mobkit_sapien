@@ -14,9 +14,9 @@ function mobkit_sapien.register_tribetrait(name, def)
 	
 end
 
--------------------------
--- BASIC TRIBE HANDING --
--------------------------
+--------------------------
+-- BASIC TRIBE HANDLING --
+--------------------------
 
 -- clear all tribes
 function mobkit_sapien.tribes.clear()
