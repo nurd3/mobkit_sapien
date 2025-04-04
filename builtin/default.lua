@@ -30,7 +30,7 @@ mobkit_sapien.register_job("mobkit_sapien:licenser", {
 	items = {[1] = license_items}
 })
 
-core.register_mods_loaded(function()
+core.register_on_mods_loaded(function()
 	for k,_ in pairs(mobkit_sapien.registered_jobs)
 	do table.insert(license_items, k.."_license")
 	end

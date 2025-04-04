@@ -29,7 +29,7 @@ dofile(path.."/functions.lua")
 dofile(path.."/names.lua")
 
 -- behaviours
-dofile(path.."/high.lua")
+dofile(path.."/behaviours.lua")
 
 -- libraries
 dofile(path.."/jobs.lua")

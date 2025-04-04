@@ -114,3 +114,5 @@ ul_market.register_goods {
 		["mobkit_sapien:egg_guardian"] = {demand = 6.0},
 	}
 }
+
+mobkit_sapien.register_tradable("ul_magic:shard")
